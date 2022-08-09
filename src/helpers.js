@@ -78,7 +78,7 @@ export const removeChildFromChildren = (children, splitItemPath) => {
 };
 
 export const addChildToChildren = (children, splitDropZonePath, item) => {
-  if (splitDropZonePath.length === 1) {
+  if (splitDropZonePath.length === 1 || splitDropZonePath.length === 0) {
     const dropZoneIndex = Number(splitDropZonePath[0]);
     return insert(children, dropZoneIndex, item);
   }
@@ -195,14 +195,24 @@ export const handleMoveSidebarComponentIntoParent = (
   item
 ) => {
   let newLayoutStructure;
+
+  console.log(item.componentsType);
   switch (splitDropZonePath.length) {
     case 1: {
-      newLayoutStructure = {
-        type: ROW,
-        id: shortid.generate(),
-        children: [{ type: COLUMN, id: shortid.generate(), children: [item] }]
-      };
-      break;
+        if(item.componentsType) {
+            newLayoutStructure = {
+                type: ROW,
+                id: shortid.generate()
+            };
+        }
+        else{
+            newLayoutStructure = {
+                type: ROW,
+                id: shortid.generate(),
+                children: [{ type: COLUMN, id: shortid.generate(), children: [item] }]
+            };
+        }
+        break;
     }
     case 2: {
       newLayoutStructure = {

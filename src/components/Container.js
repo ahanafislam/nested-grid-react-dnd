@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { COLUMN, COMPONENT, SIDEBAR_ITEM, SIDEBAR_ITEMS } from '../constants';
+import { COLUMN, COMPONENT, ROW, SIDEBAR_ITEM, SIDEBAR_ITEMS } from '../constants';
 import initialData from '../initial-data';
 import SideBarItem from './SideBarItem';
 import DropZone from './DropZone';
@@ -29,8 +29,9 @@ const Container = () => {
 
     const handleDrop = useCallback(
         (dropZone, item) => {
-        //   console.log('dropZone', dropZone)
-        //   console.log('item', item)
+          console.log('dropZone', dropZone)
+          console.log('item', item)
+          console.log('layout', layout)
     
           const splitDropZonePath = dropZone.path.split("-");
           const pathToDropZone = splitDropZonePath.slice(0, -1).join("-");
@@ -38,6 +39,14 @@ const Container = () => {
           const newItem = { id: item.id, type: item.type };
           if (item.type === COLUMN) {
             newItem.children = item.children;
+          }
+
+          if (item.component?.type === ROW) {
+            const newItem = { id: item.id, type: item.type,  componentsType: ROW};
+            setLayout(
+                handleMoveSidebarComponentIntoParent(layout, splitDropZonePath, newItem)
+            )
+            return;
           }
     
           // sidebar into
