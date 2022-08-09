@@ -7,15 +7,25 @@ import shortid from 'shortid';
 import {
     handleMoveSidebarComponentIntoParent,
     handleMoveToDifferentParent,
-    handleMoveWithinParent
+    handleMoveWithinParent,
+    handleRemoveItemFromLayout,
 } from '../helpers';
 import Row from './Row';
+import TrashDropZone from './TrashDropZone';
 
 const Container = () => {
     const initialLayout = initialData.layout;
     const initialComponents = initialData.components;
     const [layout, setLayout] = useState(initialLayout);
     const [components, setComponents] = useState(initialComponents);
+
+    const handleDropToTrashBin = useCallback(
+        (dropZone, item) => {
+          const splitItemPath = item.path.split("-");
+          setLayout(handleRemoveItemFromLayout(layout, splitItemPath));
+        },
+        [layout]
+      );
 
     const handleDrop = useCallback(
         (dropZone, item) => {
@@ -144,6 +154,12 @@ const Container = () => {
                         isLast
                     />       
                 </div>
+                <TrashDropZone
+                    data={{
+                        layout
+                    }}
+                    onDrop={handleDropToTrashBin}
+                />
             </div>
         </div>
     );
