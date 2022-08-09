@@ -29,8 +29,8 @@ const Container = () => {
 
     const handleDrop = useCallback(
         (dropZone, item) => {
-          console.log('dropZone', dropZone)
-          console.log('item', item)
+        //   console.log('dropZone', dropZone)
+        //   console.log('item', item)
     
           const splitDropZonePath = dropZone.path.split("-");
           const pathToDropZone = splitDropZonePath.slice(0, -1).join("-");
@@ -147,8 +147,8 @@ const Container = () => {
                     }
                     <DropZone
                         data={{
-                        path: `${layout.length}`,
-                        childrenCount: layout.length
+                            path: `${layout.length}`,
+                            childrenCount: layout.length
                         }}
                         onDrop={handleDrop}
                         isLast
