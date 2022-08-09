@@ -119,7 +119,7 @@ export const handleAddColumDataToRow = layout => {
   };
 
   return layoutCopy.map(row => {
-    if (!row.children.length) {
+    if (!row.children?.length) {
       row.children = [COLUMN_STRUCTURE];
     }
     return row;
