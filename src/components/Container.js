@@ -39,6 +39,7 @@ const Container = () => {
           const newItem = { id: item.id, type: item.type };
           if (item.type === COLUMN) {
             newItem.children = item.children;
+            return;
           }
 
           if (item.component?.type === ROW) {

@@ -42,22 +42,24 @@ const Column = ({ data, components, handleDrop, path }) => {
       className="base draggable column"
     >
       {data.id}
-      {data.children?.map((component, index) => {
-        const currentPath = `${path}-${index}`;
+      {
+        data.children?.map((component, index) => {
+          const currentPath = `${path}-${index}`;
 
-        return (
-          <React.Fragment key={component.id}>
-            <DropZone
-              data={{
-                path: currentPath,
-                childrenCount: data.children?.length
-              }}
-              onDrop={handleDrop}
-            />
-            {renderComponent(component, currentPath)}
-          </React.Fragment>
-        );
-      })}
+          return (
+            <React.Fragment key={component.id}>
+              <DropZone
+                data={{
+                  path: currentPath,
+                  childrenCount: data.children?.length
+                }}
+                onDrop={handleDrop}
+              />
+              {renderComponent(component, currentPath)}
+            </React.Fragment>
+          );
+        })
+      }
       <DropZone
         data={{
           path: `${path}-${data.children?.length}`,
@@ -67,6 +69,7 @@ const Column = ({ data, components, handleDrop, path }) => {
         isLast
       />
     </div>
+
   );
 };
 export default Column;
