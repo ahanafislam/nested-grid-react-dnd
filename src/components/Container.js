@@ -48,6 +48,14 @@ const Container = () => {
             )
             return;
           }
+
+          if (item.component?.type === COLUMN) {
+            const newItem = { id: item.id, type: item.type,  componentsType: COLUMN};
+            setLayout(
+                handleMoveSidebarComponentIntoParent(layout, splitDropZonePath, newItem)
+            )
+            return;
+          }
     
           // sidebar into
           if (item.type === SIDEBAR_ITEM) {

@@ -17,14 +17,23 @@ export const remove = (arr, index) => [
   ...arr.slice(index + 1)
 ];
 
-export const insert = (arr, index, newItem) => [
-  // part of the array before the specified index
-  ...arr.slice(0, index),
-  // inserted item
-  newItem,
-  // part of the array after the specified index
-  ...arr.slice(index)
-];
+export const insert = (arr, index, newItem) => {
+  let newArr = arr;
+
+  // Set new Value as empty array if newArr === undefined
+  if (!newArr) {
+    newArr = []
+  }
+
+  return [
+    // part of the array before the specified index
+    ...newArr.slice(0, index),
+    // inserted item
+    newItem,
+    // part of the array after the specified index
+    ...newArr.slice(index)
+  ]
+};
 
 export const reorderChildren = (children, splitDropZonePath, splitItemPath) => {
   if (splitDropZonePath.length === 1) {
@@ -196,13 +205,12 @@ export const handleMoveSidebarComponentIntoParent = (
 ) => {
   let newLayoutStructure;
 
-  console.log(item.componentsType);
   switch (splitDropZonePath.length) {
     case 1: {
-        if(item.componentsType) {
+        if(item.componentsType === ROW) {
             newLayoutStructure = {
                 type: ROW,
-                id: shortid.generate()
+                id: shortid.generate(),
             };
         }
         else{
@@ -215,11 +223,19 @@ export const handleMoveSidebarComponentIntoParent = (
         break;
     }
     case 2: {
-      newLayoutStructure = {
-        type: COLUMN,
-        id: shortid.generate(),
-        children: [item]
-      };
+      if(item.componentsType === COLUMN) {
+        newLayoutStructure = {
+            type: COLUMN,
+            id: shortid.generate()
+        };
+      }
+      else {
+        newLayoutStructure = {
+          type: COLUMN,
+          id: shortid.generate(),
+          children: [item]
+        };
+      }
       break;
     }
     default: {
