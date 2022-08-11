@@ -19,19 +19,6 @@ const Container = () => {
     const initialComponents = initialData.components;
     const [layout, setLayout] = useState(initialLayout);
     const [components, setComponents] = useState(initialComponents);
-    const [initialDataObj, setInitialDataObj] = useState(initialData);
-
-    // const updateInitialDataObj = () => {
-    //   initialData.layout = [...layout];
-    //   setInitialDataObj(initialData);
-    // }
-
-    useEffect(() => {
-      initialData.layout = [...layout];
-      setInitialDataObj(initialData)
-
-      console.log(initialData);
-    },[layout])
 
     const handleDropToTrashBin = useCallback(
         (dropZone, item) => {
@@ -53,7 +40,6 @@ const Container = () => {
           const newItem = { id: item.id, type: item.type };
           if (item.type === COLUMN) {
             newItem.children = item.children;
-            return;
           }
 
           if (item.component?.type === ROW) {
@@ -193,7 +179,7 @@ const Container = () => {
                     }}
                     onDrop={handleDropToTrashBin}
                 />
-              <DisplayObjectData data={initialDataObj}/>
+              <DisplayObjectData layout={layout} components={components}/>
             </div>
         </div>
     );
