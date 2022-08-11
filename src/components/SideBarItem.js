@@ -3,6 +3,10 @@ import { useDrag } from "react-dnd";
 import { SIDEBAR_ITEM } from "../constants";
 
 const SideBarItem = ({ data }) => {
+  const handlePopup = itemId => {
+    alert(`The item's id: ${itemId}`);
+  }
+
   const [{ opacity }, drag] = useDrag({
     type: SIDEBAR_ITEM,
     item: data,
@@ -12,7 +16,7 @@ const SideBarItem = ({ data }) => {
   });
   
   return (
-    <div className="sideBarItem" ref={drag} style={{ opacity }}>
+    <div className="sideBarItem" ref={drag} style={{ opacity }} onClick={() => handlePopup(data.id)}>
       {data.component.type}
     </div>
   );
