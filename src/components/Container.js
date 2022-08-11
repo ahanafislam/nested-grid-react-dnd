@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { COLUMN, COMPONENT, ROW, SIDEBAR_ITEM, SIDEBAR_ITEMS } from '../constants';
 import initialData from '../initial-data';
 import SideBarItem from './SideBarItem';
@@ -12,12 +12,26 @@ import {
 } from '../helpers';
 import Row from './Row';
 import TrashDropZone from './TrashDropZone';
+import DisplayObjectData from './DisplayObjectData';
 
 const Container = () => {
     const initialLayout = initialData.layout;
     const initialComponents = initialData.components;
     const [layout, setLayout] = useState(initialLayout);
     const [components, setComponents] = useState(initialComponents);
+    const [initialDataObj, setInitialDataObj] = useState(initialData);
+
+    // const updateInitialDataObj = () => {
+    //   initialData.layout = [...layout];
+    //   setInitialDataObj(initialData);
+    // }
+
+    useEffect(() => {
+      initialData.layout = [...layout];
+      setInitialDataObj(initialData)
+
+      console.log(initialData);
+    },[layout])
 
     const handleDropToTrashBin = useCallback(
         (dropZone, item) => {
@@ -47,6 +61,7 @@ const Container = () => {
             setLayout(
                 handleMoveSidebarComponentIntoParent(layout, splitDropZonePath, newItem)
             )
+            // updateInitialDataObj();
             return;
           }
 
@@ -178,6 +193,7 @@ const Container = () => {
                     }}
                     onDrop={handleDropToTrashBin}
                 />
+              <DisplayObjectData data={initialDataObj}/>
             </div>
         </div>
     );
