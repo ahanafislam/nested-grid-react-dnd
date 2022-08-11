@@ -8,8 +8,11 @@ const ObjectData = ({data}) => {
     },[formattedData, data])
 
     return (
-            <textarea rows="10" cols="45" readOnly defaultValue={formattedData} style={{marginTop: "2.5rem", border: "2px solid blue"}}>
+            <>
+            <h3 style={{marginTop: "2.5rem"}}>Full Object Data:</h3>
+            <textarea rows="20" cols="45" readOnly defaultValue={formattedData} style={{border: "2px solid blue"}}>
             </textarea>
+            </>
     );
 };
 
